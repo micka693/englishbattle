@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * cette classe est une servlet qui traite des requetes http sur url /verbe
@@ -44,16 +45,22 @@ public class VerbeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String baseVerbale = req.getParameter("baseVerbale");
-        String preterit = req.getParameter("preterit");
-        String participePasse= req.getParameter("participePasse");
-        String traduction= req.getParameter("traduction");
+        Map<String, String[]> map = req.getParameterMap();
 
-        Verbe verbe= vs.ajouterVerbe(baseVerbale,preterit,participePasse,traduction);
-        req.setAttribute("verbe",verbe);
+        // On parcourt l'ensemble des clés de la map
+        for (String cle : map.keySet()) {
+            String[] tableauDeValeursPourCeParametre = (String[]) map.get(cle);
+            for (String valeur : tableauDeValeursPourCeParametre) {
+                System.out.println("Clé=" + cle + ", valeur=" + valeur);
+            }
+        }
+        Long idVerbe = Long.parseLong(req.getParameter("ID"));
+        String baseVerbale = map.get("baseVerbale")[0];
+        String preterit = map.get("preterit")[0];
+        String participePasse= map.get("participePasse")[0];
+        String traduction= map.get("traduction")[0];
 
-        System.out.println(verbe);
-
-        req.getRequestDispatcher("WEB-INF/verbe.jsp").forward(req,resp);
+        verbeService.modifierVerbe(idVerbe,baseVerbale,preterit,participePasse,traduction);
+        resp.sendRedirect("verbe");
     }
 }

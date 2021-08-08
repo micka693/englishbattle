@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="englishbattle" options="-endorseddirs C:\Users\HB\Desktop\englishbattle\target/endorsed" />
+      <module name="englishbattle" options="-endorseddirs C:\Users\HB\Desktop\jsp-jsf\englishbattle\target/endorsed" />
     </option>
   </component>
 </project>
